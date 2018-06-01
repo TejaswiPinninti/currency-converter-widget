@@ -1,16 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import { AppComponent } from './app.component';
+import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule } from "@angular/common/http";
+import { CurrencyService } from "./shared/currency.service";
+import { DropdownModule } from "primeng/primeng";
+import { AppComponent } from "./app.component";
+import { CurrencyConverterComponent } from "./currency-converter/currency-converter.component";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, CurrencyConverterComponent],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    DropdownModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [CurrencyService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,17 @@
+<div class="currency-component">
+  <label for="base-input">Type in amount and select currency:</label>
+  <div>
+    <input id="base-input" type="number" placeholder="0.00" (keyup)="onKeyUpBase($event.target.value)" (click)="onKeyUpBase($event.target.value)"
+      [(ngModel)]="baseValue" />
+    <p-dropdown [options]='currencyBaseList' [(ngModel)]="selectedBase" (onChange)="onSelectBase()" filter="true" (click)="clearFilter(base)"
+      #base></p-dropdown>
+  </div>
+  <label for="convert-input">Converted amount:</label>
+  <div>
+    <input id="convert-input" type="number" placeholder="0.00" (keyup)="onKeyUpConvert($event.target.value)" (click)="onKeyUpConvert($event.target.value)"
+      [(ngModel)]="convertValue" />
+    <p-dropdown [options]='currencyConvertList' [(ngModel)]="selectedConvert" (onChange)="onSelectConvert()" filter="true" (click)="clearFilter(convert)"
+      #convert></p-dropdown>
+  </div>
+  <a target="_blank" href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">Disclaimer</a>
+</div>
