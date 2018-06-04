@@ -13,10 +13,12 @@ export class CurrencyConverterComponent implements OnInit {
   currencyBaseList: Options[];
   baseValue: number;
   convertValue: number;
-  selectedBase = 'CAD';
-  selectedConvert = 'USD';
+  selectedBase = 'EUR';
+  selectedConvert = 'CAD';
   convertRate;
   rateList: Rate[];
+  isDisclaimer = false;
+  disclaimerMsg;
 
   constructor(private currencyService: CurrencyService) {}
 
@@ -27,26 +29,17 @@ export class CurrencyConverterComponent implements OnInit {
   getRates() {
     this.currencyService.getRates(this.selectedBase).subscribe(
       response => {
-        this.currencyBaseList = [];
+        const res = <any>response;
+        this.currencyBaseList = [{ label: res.base, value: res.base }];
         this.currencyConvertList = [];
-        this.rateList = Object.values(response)[3];
-        this.currencyBaseList.push({
-          label: this.selectedBase,
-          value: this.selectedBase
-        });
-        this.convertRate = this.rateList[this.selectedConvert];
 
-        Object.keys(this.rateList).forEach(key => {
-          if (key !== this.selectedConvert) {
-            this.currencyBaseList.push({ label: key, value: key });
-          }
-        });
-
-        Object.keys(this.rateList).forEach(key => {
+        Object.keys(res.rates).forEach(key => {
           if (key !== this.selectedBase) {
             this.currencyConvertList.push({ label: key, value: key });
           }
         });
+        this.rateList = res.rates;
+        this.convertRate = res.rates[this.selectedConvert];
       },
       error => {
         alert('Something went wrong, Please try again later');
@@ -83,7 +76,8 @@ export class CurrencyConverterComponent implements OnInit {
     this.baseValue = e / this.convertRate;
   }
 
-  // formatValue(num) {
-  //   return Number(Math.round(num * 100) / 100);
-  // }
+  showExchangeRate() {
+    this.isDisclaimer = !this.isDisclaimer;
+    this.disclaimerMsg = `Exchange Rate : ${this.convertRate}`;
+  }
 }

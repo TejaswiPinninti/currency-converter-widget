@@ -4,11 +4,22 @@ $primary-padding: 10px;
 $primary-font-size: 14px;
 $secondary-font-size: 12px;
 .currency-component {
-  font: 100% $font-family;
+  // font: 100% $font-family;
   padding: $primary-padding;
   text-align: left;
   display: inline-block;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24); // width: 100%;
+}
+
+:host {
+  box-sizing: border-box;
+  display: inline-block; // width: 33%;
+  padding: 10px;
+}
+
+.disclaimer-container {
+  width: 100%;
+  min-height: 40px;
 }
 
 div {
@@ -33,7 +44,7 @@ div {
     input {
       padding: 3px;
       border: 1px solid #ccc;
-      line-height: 17px;
+      line-height: 22px;
     }
   }
   a {
