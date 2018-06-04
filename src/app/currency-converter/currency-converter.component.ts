@@ -62,6 +62,7 @@ export class CurrencyConverterComponent implements OnInit {
   }
 
   onSelectConvert() {
+    this.isDisclaimer = false;
     this.convertRate = this.rateList[this.selectedConvert];
     this.clearInputs();
   }
