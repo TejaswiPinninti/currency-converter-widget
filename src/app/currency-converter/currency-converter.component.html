@@ -17,9 +17,7 @@
       <p-dropdown [options]='currencyConvertList' [(ngModel)]="selectedConvert" (onChange)="onSelectConvert()" filter="true" (click)="clearFilter(convert)"
         #convert></p-dropdown>
     </div>
-    <div class="disclaimer-container">
-      <a href="#nogo" class="slds-right" (click)="showExchangeRate()">Disclaimer</a>
-      <p ngClass="slds-size_3-of-6" *ngIf="isDisclaimer">{{disclaimerMsg}}</p>
-    </div>
+    <span ngClass="slds-size_3-of-6" *ngIf="isDisclaimer">{{disclaimerMsg}}</span>
+    <a class="slds-right" (click)="showExchangeRate()">Disclaimer</a>
   </div>
 </section>
