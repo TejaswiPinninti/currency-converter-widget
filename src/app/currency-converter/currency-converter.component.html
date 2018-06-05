@@ -7,14 +7,14 @@
     <div class="slds-form-element__control slds-size_1-of-1">
       <input id="base-input" type="number" placeholder="0.00" (keyup)="onKeyUpBase($event.target.value)" (click)="onKeyUpBase($event.target.value)"
         [(ngModel)]="baseValue" />
-      <p-dropdown [options]='currencyBaseList' [(ngModel)]="selectedBase" (onChange)="onSelectBase()" filter="true" (click)="clearFilter(base)"
+      <p-dropdown [options]='currencyBaseList' [(ngModel)]="selectedBase" (onChange)="onSelectBase()" (click)="clearFilter(base)"
         #base></p-dropdown>
     </div>
     <label for="convert-input" class="slds-size_1-of-1">Converted amount:</label>
     <div class="slds-form-element__control slds-size_1-of-1">
       <input id="convert-input" type="number" placeholder="0.00" (keyup)="onKeyUpConvert($event.target.value)" (click)="onKeyUpConvert($event.target.value)"
         [(ngModel)]="convertValue" />
-      <p-dropdown [options]='currencyConvertList' [(ngModel)]="selectedConvert" (onChange)="onSelectConvert()" filter="true" (click)="clearFilter(convert)"
+      <p-dropdown [options]='currencyConvertList' [(ngModel)]="selectedConvert" (onChange)="onSelectConvert()" (click)="clearFilter(convert)"
         #convert></p-dropdown>
     </div>
     <span ngClass="slds-size_3-of-6" *ngIf="isDisclaimer">{{disclaimerMsg}}</span>
