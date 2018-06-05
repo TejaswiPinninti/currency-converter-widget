@@ -35,9 +35,9 @@ export class CurrencyConverterComponent implements OnInit {
         this.currencyConvertList = [];
 
         Object.keys(res.rates).forEach(key => {
-          if (key !== this.selectedBase) {
+          // if (key !== this.selectedBase) {
             this.currencyConvertList.push({ label: key, value: key });
-          }
+          // }
         });
         this.rateList = res.rates;
         this.convertRate = res.rates[this.selectedConvert];
