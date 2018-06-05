@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 
 import { Options } from '../shared/options.model';
 import { Rate } from '../shared/rate.model';
@@ -21,6 +21,7 @@ export class CurrencyConverterComponent implements OnInit {
   disclaimerMsg;
   regex = new RegExp('^[0-9]*\\.?[0-9]*$', 'g');
   private specialKey: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
+
   constructor(private currencyService: CurrencyService) {}
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class CurrencyConverterComponent implements OnInit {
 
         Object.keys(res.rates).forEach(key => {
           // if (key !== this.selectedBase) {
-            this.currencyConvertList.push({ label: key, value: key });
+          this.currencyConvertList.push({ label: key, value: key });
           // }
         });
         this.rateList = res.rates;
@@ -63,33 +64,40 @@ export class CurrencyConverterComponent implements OnInit {
   }
 
   onSelectConvert() {
-    this.isDisclaimer = false;
     this.convertRate = this.rateList[this.selectedConvert];
     this.clearInputs();
   }
 
   onKeyUpBase(e) {
-    // this.convertValue = this.formatValue(this.convertRate * e);
-    this.convertValue = this.convertRate * e;
+    this.convertValue = this.formatValue(this.convertRate * e);
   }
 
   onKeyUpConvert(e) {
-    // this.baseValue = this.formatValue(e / this.convertRate);
-    this.baseValue = e / this.convertRate;
+    this.baseValue = this.formatValue(e / this.convertRate);
   }
-
+  formatValue(number) {
+    return number.toFixed(2);
+  }
   showExchangeRate() {
     this.isDisclaimer = !this.isDisclaimer;
-    this.disclaimerMsg = `Exchange Rate : ${this.convertRate}`;
   }
   @HostListener('keydown', ['$event'])
   onKeyDown(event) {
     if (this.specialKey.indexOf(event.key) !== -1) {
       return;
     }
+    // const currentCursorPos = this.el.nativeElement.selectionStart;
+    const dotLength: number = event.target.value.replace(/[^\.]/g, '').length;
+    const decimalLength = event.target.value.split('.')[1]
+      ? event.target.value.split('.')[1].length
+      : 0;
     const current: string = event.target.value;
     const next: string = current.concat(event.key);
-    if (next && !String(next).match(this.regex)) {
+    if (
+      (next && !String(next).match(this.regex)) ||
+      (dotLength === 1 && event.key === '.')
+      // ||(decimalLength > 1 && currentCursorPos > event.target.value.indexOf("."))
+    ) {
       event.preventDefault();
     }
   }
