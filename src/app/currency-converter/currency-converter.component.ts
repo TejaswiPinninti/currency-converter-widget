@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { Options } from '../shared/options.model';
 import { Rate } from '../shared/rate.model';
@@ -19,7 +19,7 @@ export class CurrencyConverterComponent implements OnInit {
   rateList: Rate[];
   isDisclaimer = false;
   disclaimerMsg;
-
+  regex = new RegExp('^[0-9]*\\.?[0-9]*$', 'g');
   constructor(private currencyService: CurrencyService) {}
 
   ngOnInit() {
@@ -80,5 +80,13 @@ export class CurrencyConverterComponent implements OnInit {
   showExchangeRate() {
     this.isDisclaimer = !this.isDisclaimer;
     this.disclaimerMsg = `Exchange Rate : ${this.convertRate}`;
+  }
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event) {
+    const current: string = event.target.value;
+    const next: string = current.concat(event.key);
+    if (next && !String(next).match(this.regex)) {
+      event.preventDefault();
+    }
   }
 }
