@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 
 import { Options } from '../shared/options.model';
 import { Rate } from '../shared/rate.model';
@@ -21,7 +21,7 @@ export class CurrencyConverterComponent implements OnInit {
   disclaimerMsg;
   regex = new RegExp('^[0-9]*\\.?[0-9]*$', 'g');
   private specialKey: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
-
+  @ViewChild('inputCurrency') inputCurrency: ElementRef;
   constructor(private currencyService: CurrencyService) {}
 
   ngOnInit() {
@@ -86,7 +86,7 @@ export class CurrencyConverterComponent implements OnInit {
     if (this.specialKey.indexOf(event.key) !== -1) {
       return;
     }
-    // const currentCursorPos = this.el.nativeElement.selectionStart;
+    const currentCursorPos = this.inputCurrency.nativeElement.selectionStart;
     const dotLength: number = event.target.value.replace(/[^\.]/g, '').length;
     const decimalLength = event.target.value.split('.')[1]
       ? event.target.value.split('.')[1].length
@@ -96,7 +96,7 @@ export class CurrencyConverterComponent implements OnInit {
     if (
       (next && !String(next).match(this.regex)) ||
       (dotLength === 1 && event.key === '.')
-      // ||(decimalLength > 1 && currentCursorPos > event.target.value.indexOf("."))
+      || (decimalLength > 1 && currentCursorPos > event.target.value.indexOf('.'))
     ) {
       event.preventDefault();
     }
