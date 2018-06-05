@@ -20,6 +20,7 @@ export class CurrencyConverterComponent implements OnInit {
   isDisclaimer = false;
   disclaimerMsg;
   regex = new RegExp('^[0-9]*\\.?[0-9]*$', 'g');
+  private specialKey: Array<string> = ['Backspace', 'Tab', 'End', 'Home'];
   constructor(private currencyService: CurrencyService) {}
 
   ngOnInit() {
@@ -83,6 +84,9 @@ export class CurrencyConverterComponent implements OnInit {
   }
   @HostListener('keydown', ['$event'])
   onKeyDown(event) {
+    if (this.specialKey.indexOf(event.key) !== -1) {
+      return;
+    }
     const current: string = event.target.value;
     const next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex)) {
