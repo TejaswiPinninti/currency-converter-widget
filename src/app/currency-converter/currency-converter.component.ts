@@ -55,17 +55,12 @@ export class CurrencyConverterComponent implements OnInit {
 
   onSelectBase() {
     this.getRates();
-    this.clearInputs();
-  }
-
-  clearInputs() {
-    this.baseValue = null;
-    this.convertValue = null;
+    this.convertValue = this.formatValue(this.convertRate * this.baseValue);
   }
 
   onSelectConvert() {
     this.convertRate = this.rateList[this.selectedConvert];
-    this.clearInputs();
+    this.convertValue = this.formatValue(this.convertRate * this.baseValue);
   }
 
   onKeyUpBase(e) {
